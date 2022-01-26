@@ -1,0 +1,185 @@
+#include <iostream>
+#include <string>
+#include<cmath>
+#include<vector>                                                                //for vector
+
+using namespace std;
+int x=0;
+//int x2 = 0;
+using vec1i = vector<string>;                                                      //using of vector integer one dimensional
+
+//int* per(string, int, int,int*);
+int* per2(vec1i,int, int, int*);
+int factorial(int n);
+int main()
+{
+    cout << "Enter the string: \t\t press y for stop\n";
+    vec1i s2(10);                                                            //create vg vectore 1d with size step 1999 
+
+    for (int i = 0; i < 10; i++) {
+        s2[i] = "00";
+        //cout << s2[i] << endl;
+    }
+
+    int o = 0;
+    string iff = "n";
+    while (iff == "n") {
+        cin >> s2[o];
+        if (s2[o] == "y")break;
+        o++;
+    }
+    //cout <<"f[0]" <<s2[0] <<endl;
+    //o = o-1;
+    cout << "Size=" << o << endl;
+    //cin >> s;
+    int* Permutation = new int[factorial(o)]; //Making Array
+    Permutation =per2(s2, 0, o - 1, Permutation);
+    cout << "Size=" << o << endl;
+    cout << "Permutation=" << Permutation[0] << endl;
+
+
+    /*int o = 0;
+    string s;
+    cin >> s;
+    o = s.size();
+    int* Permutation = new int[factorial(s.size())]; //Making Array
+    Permutation = per(s, 0, o - 1, Permutation);*/
+
+    
+    
+    int** spell = new int* [o];
+    for (int i = 0; i < o; i++)
+        spell[i] = new int[factorial(o)]{0};
+    for (int i = 1; i <= x; i++) {
+        int* steps = new int[o]; //Making Array
+        //cout << i << "\t" << Permutation[i]<<'\t';
+        auto number = Permutation[i];
+        const std::string number_str = std::to_string(number);
+        int contr = 0;
+
+        for (const auto j : number_str)
+        {
+            contr++;
+            //clog << j << '\t';
+            spell[contr-1][i-1] = j;   //since the character '0' has the ASCII code of 48, you can just write:
+        }
+
+        //cout<< endl;
+    }
+    int maxi = 0;
+    for (int i = 0; i < o; i++) {
+        maxi += abs(spell[i][0]);
+    }
+    maxi = maxi * 2;
+    double Pro = 0.0;
+    //int number = 0;
+    //int conter = 1;
+    for (int j = 0; j < factorial(o); j++)
+    {
+        cout << "node:" << j + 1 << '\t';
+        int sum = 0;
+        for (int i = 0; i < o; i++) {
+
+            cout <<spell[i][j] << '\t';  //[shomare jaigesht][adad]  for123 [0,5][0,2]      
+            sum += abs(spell[i][0]-spell[i][j]);
+        }
+        Pro = double(sum)/ double(maxi);
+        cout << "sum:"<<sum<<'\t'<<"max:"<<maxi<<'\t' << "P:" << Pro;
+        cout << endl;
+
+        //if (number < sum) {
+        //    number = sum;
+            //conter++;
+        //}
+    }
+    //cout << conter << endl;
+    cout << "_________________done"<<endl;
+
+    return 0;
+}
+
+
+/*int* per(string s, int k, int n,int* Permu)
+{
+    if (k == n)
+    {
+        cout << "k if" << k << endl;
+        x++;
+        Permu[x] = stoi(s);
+        cout << x << '\t' << Permu[x] << endl;
+        
+    }
+    else
+    {
+
+        for (int i = k; i <= n; i++)
+        {
+
+            cout << "f[i]" << s[i] << endl;
+            cout << "f[k]" << s[k] << endl;
+            char c = s[i];
+            s[i] = s[k];
+            s[k] = c;
+
+            cout << "f[i]" << s[i] << endl;
+            cout << "f[k]" << s[k] << endl;
+            cout << "n" << n << endl;
+            cout << "i" << i << endl;
+            cout << "k" << k << endl;
+            cout << "c" << s[k] << endl;
+            Permu =per(s, k + 1, n, Permu);
+
+        }
+    }
+    return Permu;
+}*/
+int* per2(vec1i s2, int k, int n, int* Permu)
+{
+    if (k == n)
+    {
+        //cout << "k if" << k << endl;
+        x++;
+        //cout << x << '\t';
+        string dd;
+        for (int i = 0; i <= n; i++) {
+            cout << s2[i];
+            dd += s2[i];
+
+        }
+        cout << endl;
+        //string dd = s2[0] + s2[1] + s2[2];
+        Permu[x] = stoi(dd);
+        //cout << x << '\t' << Permu[x] << endl;
+
+    }
+    else
+    {
+
+        for (int i = k; i <= n; i++)
+        {
+            string c2="00";
+
+            //cout << "f2[i]" << s2[i] << endl;
+            //cout << "f2[k]" << s2[k] << endl;
+            c2 = s2[i];
+            s2[i] = s2[k];
+            s2[k] = c2;
+            //cout << "f2[i]" << s2[i] << endl;
+            //cout << "f2[k]" << s2[k] << endl;
+            //cout << "n" << n << endl;
+            //cout << "i" << i << endl;
+            //cout << "k" << k << endl;
+            //cout << "c" << s2[k] << endl;
+            Permu = per2(s2, k + 1, n, Permu);
+
+        }
+    }
+    return Permu;
+}
+int factorial(int n)
+{
+    if (n > 1)
+        return n * factorial(n - 1);
+    else
+        return 1;
+}
